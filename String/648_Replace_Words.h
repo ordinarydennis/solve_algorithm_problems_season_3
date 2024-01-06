@@ -118,3 +118,95 @@ public:
 		return ans;
 	}
 };
+
+class Solution {
+	
+	struct Node
+	{
+		std::vector<Node*> child = std::vector<Node*>(26, nullptr);
+		bool isEnd = false;
+		string val;
+	};
+
+	void SetNode(const string& str, Node* node)
+	{
+		auto* temp = node;
+
+		for (auto c : str)
+		{
+			if (nullptr == temp->child[c - 'a'])
+			{
+				temp->child[c - 'a'] = new Node();
+			}
+
+			temp = temp->child[c - 'a'];
+		}
+
+		temp->isEnd = true;
+		temp->val = str;
+
+	}
+
+	void SetDic(vector<string>& dictionary, Node* node)
+	{
+		for (const auto& str : dictionary)
+		{
+			SetNode(str, node);
+		}
+	}
+
+	string findWord(const string& str, Node* node)
+	{
+		Node* temp = node;
+
+		for (char c : str)
+		{
+			if (nullptr == temp->child[c - 'a'])
+			{
+				return str;
+			}
+
+			temp = temp->child[c - 'a'];
+
+			if (temp->isEnd)
+			{
+				return temp->val;
+			}
+		}
+		
+		return str;
+	}
+
+public:
+	string replaceWords(vector<string>& dictionary, string sentence) {
+
+		Node* node = new Node();
+
+		SetDic(dictionary, node);
+
+		string str;
+		string ret;
+
+		for (int i = 0; i <= sentence.size(); i++)
+		{
+			if(i == sentence.size() || ' ' == sentence[i])
+			{
+				if (str.size())
+				{
+					ret += findWord(str, node);
+					ret += ' ';
+					str.clear();
+				}
+			}
+			else
+			{
+				str += sentence[i];
+			}
+		}
+
+		ret.pop_back();
+
+		return ret;
+
+	}
+};
