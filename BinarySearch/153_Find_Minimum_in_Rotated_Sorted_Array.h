@@ -66,3 +66,33 @@ public:
 
 	}
 };
+
+class Solution {
+public:
+	int findMin(vector<int>& nums) {
+		int n = nums.size();
+		int low = 0, high = n - 1;
+
+		while (low < high) {
+			if (nums[low] <= nums[high]) 
+				return nums[low];
+
+			int mid = low + (high - low) / 2;
+
+			//search for unaligned sections
+			//the minimum value is in unaligned section
+			if (nums[low] > nums[mid])
+			{
+				high = mid; //including mid because mid could be the minimum value
+			}
+			else if (nums[mid] > nums[high])
+			{
+				low = mid + 1;
+			}
+		}
+		if (nums[low] <= nums[high]) 
+			return nums[low];
+
+		return -1;
+	}
+};
