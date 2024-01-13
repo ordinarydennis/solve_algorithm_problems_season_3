@@ -56,10 +56,11 @@ public:
 		ListNode* pre = dummy, * cur = head;
 		while (cur) {
 			if ((cur->next) && (cur->next->val < cur->val)) {
+				//search for bigger node than cur node  from head
 				while ((pre->next) && (pre->next->val < cur->next->val)) {
 					pre = pre->next;
 				}
-				ListNode* temp = pre->next;
+				ListNode* temp = pre->next; //backup
 				pre->next = cur->next;
 				cur->next = cur->next->next;
 				pre->next->next = temp;
@@ -73,5 +74,42 @@ public:
 	}
 };
 
-Input: head = [4, 2, 1, 3]
-Output : [1, 2, 3, 4]
+//about insertion sort
+//https://gmlwjd9405.github.io/2018/05/06/algorithm-insertion-sort.html
+
+class Solution {
+public:
+	ListNode* insertionSortList(ListNode* head) {
+
+		ListNode* dummy = new ListNode(0);
+		dummy->next = head;
+		ListNode* pre = dummy;
+		ListNode* cur = head;
+
+		while (cur)
+		{
+			if (cur->next && cur->next->val < cur->val)
+			{
+				while (pre->next && pre->next->val < cur->next->val)
+				{
+					pre = pre->next;
+				}
+
+				ListNode* temp = pre->next;
+
+				pre->next = cur->next;
+				cur->next = cur->next->next;
+				pre->next->next = temp;
+				pre = dummy;
+
+			}
+			else
+			{
+				cur = cur->next;
+			}
+		}
+
+		return dummy->next;
+	}
+};
+
