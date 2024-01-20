@@ -10,8 +10,9 @@
  * };
  */
 class Solution {
+
 public:
-    int widthOfBinaryTree(TreeNode* root) {
+	int widthOfBinaryTree(TreeNode* root) {
 
 		queue<TreeNode*> q;
 
@@ -19,19 +20,19 @@ public:
 
 		int ret = 0;
 
-		while(!q.empty())
+		while (!q.empty())
 		{
 			int size = static_cast<int>(q.size());
 			int nulCount = 0;
 			int intCount = 0;
 			int sum = 0;
 
-			for(int i = 0; i < size; i++)
+			for (int i = 0; i < size; i++)
 			{
 				auto f = q.front();
 				q.pop();
 
-				if(!f)
+				if (!f)
 				{
 					continue;
 				}
@@ -40,7 +41,7 @@ public:
 
 				q.push(f->right);
 
-				if(f->left)
+				if (f->left)
 				{
 					sum++;
 					sum += nulCount;
@@ -50,8 +51,8 @@ public:
 				{
 					nulCount++;
 				}
-				
-				if(f->right)
+
+				if (f->right)
 				{
 					sum++;
 					sum += nulCount;
@@ -67,5 +68,63 @@ public:
 
 		}
 		return ret;
-    }
+	}
 };
+
+
+class Solution {
+
+public:
+	int widthOfBinaryTree(TreeNode* root) {
+
+		queue<pair<TreeNode*, long long>> que;
+
+		que.push({ root, 0 });
+
+		int ret = 0;
+
+		while (que.size())
+		{
+			int sz = static_cast<int>(que.size());
+
+			auto first = que.front().second;
+
+			int begin = 0;
+			int end = 0;
+
+			for (int i = 0; i < sz; i++)
+			{
+				auto p = que.front();
+				que.pop();
+
+				auto k = p.second - first;
+
+				if (0 == i)
+				{
+					begin = k;
+				}
+
+				if (sz - 1 == i)
+				{
+					end = k;
+				}
+
+				if (p.first->left)
+				{
+					que.push({ p.first->left , (2 * k) + 1 });
+				}
+				if (p.first->right)
+				{
+					que.push({ p.first->right , (2 * k) + 2 });
+				}
+			}
+
+			ret = std::max(ret, end - begin + 1);
+		}
+
+		return ret;
+	}
+};
+
+
+//https://leetcode.com/problems/maximum-width-of-binary-tree/solutions/3436483/c-bfs-approach-with-explanation-simple-solution/
