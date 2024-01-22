@@ -69,3 +69,30 @@ public:
 		return 0;
 	}
 };
+
+
+class Solution {
+public:
+	int kthSmallest(vector<vector<int>>& matrix, int k) {
+		
+		priority_queue<int> pq;  //default ordering is less but the greatest element is at the top
+
+		int n = matrix.size();
+
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < n; j++) 
+			{
+				pq.push(matrix[i][j]);
+
+				if (pq.size() > k) 
+					pq.pop();
+			}
+		}
+			
+		return pq.top();
+	}
+};
+
+
+//https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/solutions/1323090/c-solution/
