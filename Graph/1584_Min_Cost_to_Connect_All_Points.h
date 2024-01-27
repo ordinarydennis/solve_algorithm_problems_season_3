@@ -136,55 +136,46 @@ public:
 //https://8iggy.tistory.com/159
 
 
-
 class Solution {
 public:
 	int minCostConnectPoints(vector<vector<int>>& points) {
 
-		priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq; 
+		priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> q;
 
-		int count = 0;
+		q.push(pair<int, int> {0, 0});
 
 		int size = static_cast<int>(points.size());
 
-		vector<bool> visit(points.size());
+		vector<bool> visit(size);
 
-		pq.push(pair<int, int> {0, 0});
+		int edgeCount = 0;
 
 		int ret = 0;
 
-		int remain = size;
-
-		while (remain)
+		while (edgeCount < size)
 		{
-			count++;
-
-			auto p = pq.top();
-
-			pq.pop();
-
-			int w = p.first;
-			int nodeIndex = p.second;
-
-			if (visit[nodeIndex])
+			auto p = q.top();
+			q.pop();
+			if (visit[p.second])
 				continue;
 
-			ret += w;
+			int d = p.first;
+			int nodeI = p.second;
 
-			remain--;
+			ret += d;
 
-			visit[nodeIndex] = true;
+			visit[nodeI] = true;
+
+			edgeCount++;
 
 			for (int i = 0; i < size; i++)
 			{
-				if (visit[i])
-					continue;
+				if (visit[i]) continue;
 
-				int d = abs(points[i][0] - points[nodeIndex][0]) +
-					abs(points[i][1] - points[nodeIndex][1]);
+				int md = abs(points[i][0] - points[nodeI][0]) + abs(points[i][1] - points[nodeI][1]);
 
-				pq.push(pair<int, int> {d, i});
-			}	
+				q.push(pair<int, int> { md, i });
+			}
 		}
 
 		return ret;
