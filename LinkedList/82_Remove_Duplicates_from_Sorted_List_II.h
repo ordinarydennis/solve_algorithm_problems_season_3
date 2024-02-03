@@ -10,61 +10,66 @@
  */
 class Solution {
 public:
-    ListNode* deleteDuplicates(ListNode* head) {
+	ListNode* deleteDuplicates(ListNode* head) {
 
-        ListNode* ret = head;
+		ListNode* ret = head;
 
-        ListNode* temp = head;
-        ListNode* h = nullptr;
+		ListNode* temp = head;
+		ListNode* h = nullptr;
 
-        while (temp)
-        {            
-            if(nullptr == temp->next)
-            {
-                break;
-            }
+		while (temp)
+		{            
+			if(nullptr == temp->next)
+			{
+				break;
+			}
 
-            if (temp && temp->next)
-            {
-                if (temp->val != temp->next->val)
-                {
-                    h = temp;
-                    temp = temp->next;
-                    
-                    continue;
-                }
-            }
-            
-            while(temp)
-            {
-                if(nullptr == temp->next)
-                {
-                    h->next = nullptr;
-                    break;
-                }
+			if (temp && temp->next)
+			{
+				if (temp->val != temp->next->val)
+				{
+					h = temp;
+					temp = temp->next;
+					
+					continue;
+				}
+			}
+			
+			while(temp)
+			{
+				if(nullptr == temp->next)
+				{
+					h->next = nullptr;
+					break;
+				}
 
-                if(temp->val == temp->next->val)
-                {
-                    temp = temp->next;
-                }
-                else
-                {
-                    if(nullptr == h)
-                    {
-                        h = temp->next;
-                    }
-                    else
-                    {
-                        h->next = temp->next;
-                        h = temp;
-                        temp = temp->next;
-                    }                    
-                }
-            }
-        }
-        
-        return ret;
-    }
+				if(temp->val == temp->next->val)
+				{
+					temp = temp->next;
+				}
+				else
+				{
+					if(nullptr == h)
+					{
+						h = temp->next;
+					}
+					else
+					{
+						h->next = temp->next;
+						h = temp;
+						temp = temp->next;
+					}
+				}
+			}
+		}
+
+		return ret;
+	}
+};
+
+
+class Solution {
+public:
 
 	ListNode* deleteDuplicates(ListNode* head) {
 
@@ -92,7 +97,9 @@ public:
 
 		return dummy.next;
 	}
+
 };
+
 //https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/solutions/1395724/8-lines-c-solution-faster-than-100-submissions-for-beginners-explanation-of-approach/
 class Solution
 {
@@ -127,3 +134,43 @@ public:
 	}
 };
 //https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/solutions/816387/simple-3-pointer-solution-8ms-c/
+
+
+class Solution {
+public:
+
+	ListNode* deleteDuplicates(ListNode* head) {
+
+		
+		ListNode* dummy = new ListNode(0, head);
+		ListNode* pre = dummy;
+		ListNode* cur = head;
+		
+		while (cur)
+		{
+			auto* next = cur->next;
+
+			while (next && cur->val == next->val)
+			{
+				auto* temp = next;
+				next = next->next;
+				delete temp;
+			}
+
+			//no nodes that have value duplicated
+			if (cur->next == next)
+			{
+				pre = cur;
+				cur = next;
+			}
+			else
+			{
+				delete cur;
+				cur = next;
+				pre->next = cur;
+			}
+		}
+
+		return dummy->next;
+	}
+};
