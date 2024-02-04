@@ -140,7 +140,6 @@ class Solution {
 public:
 
 	ListNode* deleteDuplicates(ListNode* head) {
-
 		
 		ListNode* dummy = new ListNode(0, head);
 		ListNode* pre = dummy;
@@ -161,14 +160,13 @@ public:
 			if (cur->next == next)
 			{
 				pre = cur;
-				cur = next;
 			}
 			else
 			{
 				delete cur;
-				cur = next;
-				pre->next = cur;
+				pre->next = next;
 			}
+			cur = next;
 		}
 
 		return dummy->next;
