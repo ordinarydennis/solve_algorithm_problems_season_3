@@ -40,13 +40,12 @@ class Solution {
 		recursion(s, !left);
 	}
 
-
 public:
-    int lastRemaining(int n) {
+	int lastRemaining(int n) {
 
 		set<int> s;
 
-		for(int i = 1; i <= n; i++)
+		for (int i = 1; i <= n; i++)
 		{
 			s.insert(i);
 		}
@@ -54,5 +53,19 @@ public:
 		recursion(s, true);
 
 		return *s.begin();
-    }
+	}
+
 };
+
+
+class Solution {
+public:
+	int lastRemaining(int n) {
+		if (n == 1) {
+			return 1;
+		}
+		return 2 * (n / 2 + 1 - lastRemaining(n / 2));
+	}
+};
+
+//https://leetcode.com/problems/elimination-game/solutions/4277182/mathematical-approach-recursion-o-log-n/
