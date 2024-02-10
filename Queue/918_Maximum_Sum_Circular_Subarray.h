@@ -1,24 +1,18 @@
 class Solution {
 public:
-	int maxSubarraySumCircular(vector<int>& nums) {
-
-		int ret = INT_MIN;
-
-		for (int size = 0; size < nums.size(); size++)
-		{
-			for (int cur = 0; cur < nums.size(); cur++)
-			{
-				int sum = 0;
-
-				for (int start = cur; start <= cur + size; start++)
-				{
-					sum += nums[(start) % nums.size()];
-				}
-
-				ret = std::max(ret, sum);
-			}
-		}
-
-		return ret;
-	}
+    int maxSubarraySumCircular(vector<int>& nums) {
+        int totalSum = 0, maxSum = INT_MIN, curMax = 0, minSum = INT_MAX, curMin = 0;
+        for (int x : nums) {
+            curMax = max(x, curMax + x);  //update the current max subarray sum
+            maxSum = max(maxSum, curMax); //update the overall max subarray sum
+            curMin = min(x, curMin + x);  //update the current min subarray sum
+            minSum = min(minSum, curMin); //update the overall min subarray sum
+            totalSum += x;
+        }
+        return maxSum > 0 ? max(maxSum, totalSum - minSum) : maxSum;
+    }
 };
+
+
+
+//https://leetcode.com/problems/maximum-sum-circular-subarray/solutions/3066098/kadane-algo-easy-video-explaination-o-n-o-1/
