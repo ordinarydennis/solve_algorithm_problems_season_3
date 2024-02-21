@@ -7,16 +7,23 @@ public:
 
 		while (columnNumber)
 		{
-			int n = (columnNumber %  27);
+			columnNumber--;
 
-			char c = n + ('A' - 1);
+			int n = (columnNumber %  26);
+
+			char c = n + 'A';
 			
-			ret = ret + c; 
+			ret = c + ret;
 
-			columnNumber = columnNumber / 27;
+			columnNumber = columnNumber / 26;
 		}
 
 		return ret;
 
 	}
 };
+
+//https://leetcode.com/problems/excel-sheet-column-title/solutions/3943071/100-recursive-iterative-2-approaches/
+
+
+
