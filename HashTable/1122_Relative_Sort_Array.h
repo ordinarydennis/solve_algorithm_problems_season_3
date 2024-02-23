@@ -10,9 +10,7 @@ public:
 			{
 				if (arr1[i] == arr2[t])
 				{
-					int temp = arr1[i];
-					arr1[i] = arr1[index];
-					arr1[index] = temp;
+					std::swap(arr1[i], arr1[index]);
 					index++;
 				}
 			}
@@ -21,6 +19,25 @@ public:
 		std::sort(arr1.begin() + index, arr1.end());
 
 		return arr1;
-
 	}
 };
+
+class Solution {
+public:
+	vector<int> relativeSortArray(vector<int>& arr1, vector<int>& arr2) {
+
+		std::map<int, int> m;
+
+		for (int n : arr1) m[n]++;
+
+		int t = 0;
+
+		for (int n : arr2) while (m[n]--) arr1[t++] = n;
+
+		for (auto& [n, count] : m) while (0 < count && count--) arr1[t++] = n;
+		
+		return arr1;
+	}
+};
+
+https://leetcode.com/problems/relative-sort-array/solutions/336504/c-by-author-lucidly-explained-algorithm-and-then-code-with-comments-in-cpp/
