@@ -62,3 +62,44 @@ public:
 };
 
 //https://leetcode.com/problems/shuffle-an-array/solutions/1283088/c-solution-with-intuition-and-explanation/
+
+
+
+class Solution {
+public:
+	Solution(vector<int>& nums) {
+
+		origin = nums;
+		size = static_cast<int>(nums.size());
+
+	}
+
+	vector<int> reset() {
+
+		return origin;
+
+	}
+
+	vector<int> shuffle() {
+
+		auto shuffled = origin;
+
+		int sizeLeft = size;
+
+		for (int i = size - 1; 0 <= i; i--)
+		{
+			int randIndex = random() % sizeLeft;
+
+			std::swap(shuffled[i], shuffled[randIndex]);
+
+			sizeLeft--;
+		}
+
+		return shuffled;
+	}
+
+
+	vector<int> origin;
+	int size = 0;
+};
+
