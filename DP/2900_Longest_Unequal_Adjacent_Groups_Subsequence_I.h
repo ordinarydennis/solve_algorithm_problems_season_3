@@ -45,3 +45,41 @@ public:
 		return	ret;
 	}
 };
+
+//https://leetcode.com/problems/longest-unequal-adjacent-groups-subsequence-i/solutions/4168304/c-c-java-python-javascript-beats-95-dp-explained/
+
+class Solution {
+public:
+	vector<string> getWordsInLongestSubsequence(int n, vector<string>& words, vector<int>& groups) {
+		// Initialize two vectors to keep track of the maximum subsequence length and the previous word index.
+		vector<int> dp(groups.size(), 1);
+		vector<int> pv(groups.size(), -1);
+
+		// Iterate through the words and groups to find the longest subsequence.
+		for (int i = 1; i < groups.size(); i++) {
+			for (int j = 0; j < i; j++) {
+				// Check if the groups are different.
+				if (groups[i] == groups[j]) continue;
+
+				// If the subsequence length of j + 1 is greater than i, update dp[i] and pv[i].
+				if (dp[j] + 1 > dp[i]) {
+					dp[i] = dp[j] + 1;
+					pv[i] = j;
+				}
+			}
+		}
+
+		// Find the index of the maximum subsequence length in the dp vector.
+		int wi = (max_element(dp.begin(), dp.end()) - dp.begin());
+		vector<string> ans; // Initialize a vector to store the answer.
+
+		// Reconstruct the longest subsequence by following the previous word indices.
+		while (wi != -1) {
+			ans.push_back(words[wi]); // Add words to the answer in reverse order to get the longest subsequence.
+			wi = pv[wi]; // Move to the previous word in the subsequence.
+		}
+
+		reverse(ans.begin(), ans.end()); // Reverse the answer to get the correct order.
+		return ans;
+	}
+};
