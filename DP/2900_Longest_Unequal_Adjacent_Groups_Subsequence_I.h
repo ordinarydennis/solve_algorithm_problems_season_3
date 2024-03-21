@@ -83,3 +83,43 @@ public:
 		return ans;
 	}
 };
+
+
+
+class Solution {
+public:
+	vector<string> getLongestSubsequence(vector<string>& words, vector<int>& groups) {
+
+		vector<int> pre(words.size(), -1);
+		vector<int> count(words.size(), 1);
+
+		for(int a = 1; a  < groups.size(); a++)
+		{ 
+			for (int i = 0; i < a; i++)
+			{
+				if (groups[i] == groups[a])
+					continue;
+
+				if (count[a] < count[i] + 1)
+				{
+					pre[a] = i;
+					count[a] = count[i] + 1;
+				}	
+			}
+		}
+
+		int index = max_element(count.begin(), count.end()) - count.begin();
+
+		vector<string> ret;
+
+		while (-1 != index)
+		{
+			ret.push_back(words[index]);
+			index = pre[index];
+		}
+
+		reverse(ret.begin(), ret.end());
+		
+		return ret;
+	}
+};
