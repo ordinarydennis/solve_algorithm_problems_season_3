@@ -10,29 +10,36 @@
  * };
  */
 class Solution {
-
-	TreeNode* dfs(int n)
-	{
-		if (n <= 0)
-		{
-			return nullptr;
-		}
-
-		TreeNode* node = new TreeNode;
-
-		node->left = dfs(n--);
-		node->right = dfs(n--);
-
-		return node;
-	}
-
-
 public:
-	vector<TreeNode*> allPossibleFBT(int n) {
+    unordered_map<int, vector<TreeNode*>> memo;
+    vector<TreeNode*> allPossibleFBT(int n) {
+        if ((n % 2) == 0) {
+            return {};
+        }
 
-		//0, 1, 2, 3, 4,5,6
+        if (n == 1) {
+            return { new TreeNode() };
+        }
 
-		return dfs(n);
+        if (memo.find(n) != memo.end()) {
+            return memo[n];
+        }
 
-	}
+        vector<TreeNode*> res;
+        for (int i = 1; i < n; i += 2) {
+            vector<TreeNode*> left = allPossibleFBT(i);
+            vector<TreeNode*> right = allPossibleFBT(n - i - 1);
+
+            for (auto l : left) {
+                for (auto r : right) {
+                    TreeNode* root = new TreeNode(0, l, r);
+                    res.push_back(root);
+                }
+            }
+        }
+
+        return memo[n] = res;
+    }
 };
+
+//https://leetcode.com/problems/all-possible-full-binary-trees/editorial/
