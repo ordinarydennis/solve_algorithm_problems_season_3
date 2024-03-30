@@ -7,55 +7,46 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
-
 class Codec {
 
-
-    void serializeDfs(TreeNode* root, string& out)
-    {
-        if (!root)
-            return;
-
-        out += to_string(root->val);
-
-        serializeDfs(root->left, out);
-        serializeDfs(root->right, out);
-    }
-
-
-	void deserializeDfs(const string& data, int index, TreeNode* out)
+	TreeNode* deserialize(istringstream& iss)
 	{
-		if (!out)
-			return;
+		string val;
 
-        out = new TreeNode(data[index] - '0');
+		iss >> val;
 
-        out->left = deserializeDfs(data, index++, out);
-        out->right = deserializeDfs(data, index++, out);
+		if ("#" == val)
+			return nullptr;
+	   
+		auto* node = new TreeNode(stoi(val));
+		node->left = deserialize(iss);
+		node->right = deserialize(iss);
+		
+		return node;
 	}
 
 public:
 
-    // Encodes a tree to a single string.
-    string serialize(TreeNode* root) {
+	// Encodes a tree to a single string.
+	string serialize(TreeNode* root) {
 
-        string ret;
+		if (nullptr == root)
+			return "# ";
 
-        serializeDfs(root, ret);
+		return 
+			std::to_string(root->val)   + " " + 
+			serialize(root->left)       + " " + 
+			serialize(root->right)      + " " ;
+	}
 
+	// Decodes your encoded data to tree.
+	TreeNode* deserialize(string data) {
 
-        return ret;
-    }
+		istringstream iss(data);
 
-    // Decodes your encoded data to tree.
-    TreeNode* deserialize(string data) {
+		return deserialize(iss);
 
-        TreeNode* ret = new TreeNode();
-
-        deserializeDfs(data, 0, ret);
-
-        return ret;
-    }
+	}
 };
 
 // Your Codec object will be instantiated and called as such:
@@ -64,3 +55,12 @@ public:
 // string tree = ser->serialize(root);
 // TreeNode* ans = deser->deserialize(tree);
 // return ans;
+
+//the tree will be serialized as follow:
+//    5
+//  2   6
+// 1 3
+
+//"5 2 1 # # 3 # # 6 # # "
+
+
