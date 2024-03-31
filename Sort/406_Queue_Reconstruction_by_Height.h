@@ -57,3 +57,31 @@ See the final ans array fullfills all the conditions.
 // Why are big numbers processed first?
 
 
+
+class Solution {
+public:
+	vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
+
+		vector<vector<int>> ret;
+
+		std::sort(people.begin(), people.end(), [](vector<int>& l, vector<int>& r)
+			{
+				if (l[0] == r[0])
+				{
+					return l[1] < r[1];
+				}
+
+				return l[0] > r[0];
+			}
+		);
+
+
+		for (auto& hi : people)
+		{
+			ret.insert(ret.begin() + hi[1], hi);
+		}
+
+		return ret;
+	}
+};
+
