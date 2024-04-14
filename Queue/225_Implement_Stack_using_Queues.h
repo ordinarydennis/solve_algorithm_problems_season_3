@@ -144,10 +144,8 @@ private:
 
 
 };
-https://leetcode.com/problems/implement-stack-using-queues/solutions/765739/c-100-00-2-queues-100-00-1-queue-easy-to-understand/
 
 //using one queue
-
 class MyStack {
 public:
     MyStack() {
@@ -160,19 +158,30 @@ public:
 
         for (int i = 0; i < q.size() - 1; i++)
         {
-
+            q.push(q.front());
+            q.pop();
         }
     }
 
     int pop() {
 
+        int n = top();
+
+        q.pop();
+
+        return n;
+
     }
 
     int top() {
 
+        return q.front();
+
     }
 
     bool empty() {
+
+        return q.empty();
 
     }
 
@@ -181,6 +190,9 @@ private:
     std::queue<int> q;
 
 };
+
+https://leetcode.com/problems/implement-stack-using-queues/solutions/765739/c-100-00-2-queues-100-00-1-queue-easy-to-understand/
+
 
 /**
  * Your MyStack object will be instantiated and called as such:
