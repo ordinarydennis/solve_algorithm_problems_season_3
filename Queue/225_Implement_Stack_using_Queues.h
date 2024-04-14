@@ -96,6 +96,92 @@ private:
 
 };
 
+//using two queues
+class MyStack {
+public:
+    MyStack() {
+
+    }
+
+    void push(int x) {
+
+        q2.push(x);
+
+        while (!q1.empty())
+        {
+            q2.push(q1.front());
+            q1.pop();
+        }
+
+        swap(q2, q1);
+    }
+
+    int pop() {
+
+        int n = top();
+
+        q1.pop();
+
+        return n;
+
+    }
+
+    int top() {
+
+        return q1.front();
+    }
+
+    bool empty() {
+
+        return q1.empty();
+
+    }
+
+
+private:
+    std::queue<int> q1;
+    std::queue<int> q2;
+
+
+};
+https://leetcode.com/problems/implement-stack-using-queues/solutions/765739/c-100-00-2-queues-100-00-1-queue-easy-to-understand/
+
+//using one queue
+
+class MyStack {
+public:
+    MyStack() {
+
+    }
+
+    void push(int x) {
+
+        q.push(x);
+
+        for (int i = 0; i < q.size() - 1; i++)
+        {
+
+        }
+    }
+
+    int pop() {
+
+    }
+
+    int top() {
+
+    }
+
+    bool empty() {
+
+    }
+
+
+private:
+    std::queue<int> q;
+
+};
+
 /**
  * Your MyStack object will be instantiated and called as such:
  * MyStack* obj = new MyStack();
