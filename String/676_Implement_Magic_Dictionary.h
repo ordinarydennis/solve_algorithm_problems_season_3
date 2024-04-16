@@ -6,7 +6,6 @@ public:
 
     void buildDict(vector<string> dictionary) {
 
-
         mDictionary = std::move(dictionary);
 
     }
@@ -14,10 +13,8 @@ public:
     bool search(string searchWord) {
 
         for (const auto& d : mDictionary)
-        {
             if (Check(d, searchWord))
                 return true;
-        }
         
         return false;
     }
@@ -28,41 +25,18 @@ private:
     bool Check(string d, string t)
     {
         if (d.size() != t.size())
-        {
             return false;
-        }
 
         if (d == t)
-        {
             return false;
-        }
 
-        std::unordered_map<char, int> memo;
-
-        int max = 0;
-        int min = 0;
+        int count = 0;
 
         for (int i = 0; i < d.size(); i++)
-        {
-            memo[d[i]]++;
-            memo[t[i]]--;
-        }
+            if(d[i] != t[i])
+                count++;
 
-        for (const auto& [c, count] : memo)
-        {
-            if (1 == count)
-            {
-                max++;
-			}
-            
-            else if (-1 == count)
-            {
-                min++;
-            }
-
-        }
-
-        return 1 == max && 1 == min;
+        return 1 == count;
     }
 
 
@@ -71,6 +45,36 @@ private:
 
 };
 
+
+class MagicDictionary {
+public:
+
+	unordered_set<string> set;
+
+	MagicDictionary() {
+	}
+
+	void buildDict(vector<string> dictionary) {
+		for (string str : dictionary)
+			set.insert(str);
+	}
+
+	bool search(string searchWord) {
+		for (string s : set) {
+			if (s.size() == searchWord.size()) {
+				int cnt = 0;
+				for (int i = 0;i < s.size();i++) {
+					if (s[i] != searchWord[i]) cnt++;
+				}
+				if (cnt == 1) return true;
+			}
+		}
+		return false;
+	}
+
+};
+
+//https://leetcode.com/problems/implement-magic-dictionary/solutions/956713/easy-understanding-c/
 
 /**
  * Your MagicDictionary object will be instantiated and called as such:
