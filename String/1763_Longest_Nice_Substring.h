@@ -16,9 +16,9 @@ class Solution {
 			}
 		}
 
-		for (auto& p : arr)
+		for (auto& [_, pair] : arr)
 		{
-			if (false == p.first || false == p.first)
+			if (false == pair.first || false == pair.second)
 			{
 				return false;
 			}
