@@ -2,6 +2,28 @@ class Solution {
 public:
 	bool strongPasswordCheckerII(string password) {
 
+		if (password.size() < 8) return false;
+
+		bool isLower = false, isUpper = false, isDigit = false, isSpecial = false;
+
+		for (int i = 0; i < password.size(); i++)
+		{
+			if (0 < i && password[i] == password[i - 1]) return false;
+			else if (islower(password[i])) isLower = true;
+			else if (isupper(password[i])) isUpper = true;
+			else if (isdigit(password[i])) isDigit = true;
+			else isSpecial = true;
+		}
+
+		return isLower && isUpper && isDigit && isSpecial;
+	}
+};
+
+
+class Solution {
+public:
+	bool strongPasswordCheckerII(string password) {
+
 		if (password.size() < 8)
 			return false;
 

@@ -1,5 +1,38 @@
 class Solution {
 
+	bool isNice(string& str)
+	{
+		for (int i = 0; i < str.size(); i++)
+		{
+			char c = islower(str[i]) ? (str[i] - 'a') + 'A' : (str[i] - 'A') + 'a';
+			if (str.find(c) == string::npos)
+				return false;
+		}
+		return true;
+	}
+
+public:
+	string longestNiceSubstring(string s) {
+
+		string ret;
+
+		for (int a = 0; a < s.size(); a++)
+		{
+			string str = string(1, s[a]);
+			for (int b = a + 1; b < s.size(); b++)
+			{
+				if (str += s[b]; isNice(str) && ret.size() < str.size())
+					ret = str;
+			}
+		}
+
+		return ret;
+	}
+};
+https://leetcode.com/problems/longest-nice-substring/solutions/2448334/easy-c-solution-simple-to-understand/
+
+class Solution {
+
 	bool isNice(string& s)
 	{
 		std::unordered_map<int, pair<bool, bool>> arr;

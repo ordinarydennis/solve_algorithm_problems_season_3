@@ -1,47 +1,95 @@
 class MagicDictionary {
 public:
-    MagicDictionary() {
+	MagicDictionary() {
 
-    }
+	}
 
-    void buildDict(vector<string> dictionary) {
+	void buildDict(vector<string> dictionary) {
 
-        mDictionary = std::move(dictionary);
+		mDic = std::move(dictionary);
 
-    }
+	}
 
-    bool search(string searchWord) {
+	bool search(string searchWord) {
 
-        for (const auto& d : mDictionary)
-            if (Check(d, searchWord))
-                return true;
-        
-        return false;
-    }
+		bool ret = false;
+
+		for (const auto& str : mDic)
+		{
+			if (str.size() != searchWord.size())
+				continue;
+ 
+			int count = 0;
+			for (int i = 0; i < searchWord.size(); i++)
+			{
+				if (str[i] != searchWord[i])
+					count++;
+			}
+
+			if (1 == count)
+				return true;
+		}
+
+		return ret;
+	}
+
+private:
+	vector<string> mDic;
+
+};
+
+/**
+ * Your MagicDictionary object will be instantiated and called as such:
+ * MagicDictionary* obj = new MagicDictionary();
+ * obj->buildDict(dictionary);
+ * bool param_2 = obj->search(searchWord);
+ */
+
+
+class MagicDictionary {
+public:
+	MagicDictionary() {
+
+	}
+
+	void buildDict(vector<string> dictionary) {
+
+		mDictionary = std::move(dictionary);
+
+	}
+
+	bool search(string searchWord) {
+
+		for (const auto& d : mDictionary)
+			if (Check(d, searchWord))
+				return true;
+		
+		return false;
+	}
 
 
 private:
 
-    bool Check(string d, string t)
-    {
-        if (d.size() != t.size())
-            return false;
+	bool Check(string d, string t)
+	{
+		if (d.size() != t.size())
+			return false;
 
-        if (d == t)
-            return false;
+		if (d == t)
+			return false;
 
-        int count = 0;
+		int count = 0;
 
-        for (int i = 0; i < d.size(); i++)
-            if(d[i] != t[i])
-                count++;
+		for (int i = 0; i < d.size(); i++)
+			if(d[i] != t[i])
+				count++;
 
-        return 1 == count;
-    }
+		return 1 == count;
+	}
 
 
 private:
-    vector<string>  mDictionary;
+	vector<string>  mDictionary;
 
 };
 
