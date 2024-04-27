@@ -1,4 +1,45 @@
 class Solution {
+public:
+	bool isPossible(vector<int>& A) {
+
+		unordered_map<int, int> left, end;
+
+		for (int n : A)
+			left[n]++;
+
+		for (int n : A)
+		{	
+			if (0 == left[n])
+				continue;
+
+			left[n]--;
+
+			if (0 < end[n - 1])
+			{
+				end[n - 1]--;
+				end[n]++;
+			}
+			else if (0 < left[n + 1] && 0 < left[n + 2])
+			{
+				left[n + 1]--;
+				left[n + 2]--;
+				end[n + 2]++;
+			}
+			else
+			{
+				return false;
+			}
+
+		}
+
+		return true;
+	}
+};
+
+https://leetcode.com/problems/split-array-into-consecutive-subsequences/solutions/106514/c-python-esay-understand-solution/
+
+
+class Solution {
 
 	vector<vector<int>> ret;
 
