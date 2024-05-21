@@ -2,6 +2,34 @@ class Solution {
 public:
 	int minimumLength(string s) {
 
+		int begin = 0;
+		int end = s.size() - 1;
+
+		while (begin < end && s[begin] == s[end])
+		{
+			char c = s[begin];
+
+			while (begin <= end && c == s[begin])
+			{
+				begin++;
+			}
+
+			while (begin < end && c == s[end])
+			{
+				end--;
+			}
+		}
+
+		return end - begin + 1;
+	}
+};
+
+
+
+class Solution {
+public:
+	int minimumLength(string s) {
+
 		int si = 0;
 		int ei = s.size() - 1;
 
