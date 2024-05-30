@@ -1,5 +1,51 @@
 class Solution {
 
+public:
+	vector<string> findAllRecipes(vector<string>& recipes, vector<vector<string>>& ingredients, vector<string>& supplies) {
+
+		unordered_map<string, bool> available;
+		vector<string> res;
+		for (auto str : supplies)
+			available[str] = true;
+
+		bool keepCooking = true;
+		int n = recipes.size();
+		vector<int> created(n, 0);
+
+		while (keepCooking)
+		{
+			keepCooking = false;
+			for (int i = 0;i < n;i++)
+			{
+				if (created[i])
+					continue;
+
+				int count = ingredients[i].size();
+				for (auto& s : ingredients[i])
+				{
+					if (available.find(s) != available.end())
+						count--;
+				}
+				if (!count)
+				{
+					keepCooking = true;
+					created[i] = 1;
+					available[recipes[i]] = true;
+					res.push_back(recipes[i]);
+				}
+			}
+		}
+		return res;
+	}
+
+};
+
+//the answer of problem depends on ordering of recipes..
+//I think this is bad problem.
+https://leetcode.com/problems/find-all-possible-recipes-from-given-supplies/solutions/1646854/c-brute-force-topological-sort-explanation/
+
+class Solution {
+
 
 	bool findRecipes(vector<string>& ingredients, unordered_set<string>& ss, unordered_map<string, vector<string>>& rs, unordered_map<string, bool>& rb)
 	{
